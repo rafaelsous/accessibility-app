@@ -1,13 +1,16 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-
-import { Match } from '../Match';
 import { TEAMS } from '../../utils/teams';
-
-import { Container, Title } from './styles';
+import { Match } from '../Match';
 import { Search } from '../Search';
+import { Container, Title } from './styles';
+
+
 
 export function Matches() {
+  function handleAccessibilityAction(actionName: string) {
+    console.log("Ação do usuário: ", actionName);
+  }
 
   return (
     <Container>
@@ -21,6 +24,11 @@ export function Matches() {
         renderItem={({ item }) => (
           <Match
             data={item}
+            accessibilityActions={[
+              { name: 'activate', label: 'Ver detalhes do jogo' },
+              { name: 'longpress', label: 'Atualizar placar do jogo' }
+            ]}
+            onAccessibilityAction={e => handleAccessibilityAction(e.nativeEvent.actionName)}
           />
         )}
       />
